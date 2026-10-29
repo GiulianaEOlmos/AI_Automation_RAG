@@ -1,0 +1,887 @@
+{
+  "name": "Job Finder · Multi-ATS",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        688,
+        80
+      ],
+      "id": "8bd71ce1-912a-41f8-a5bb-338e15ba0ecd",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"sites\": [\n    {\n      \"source\": \"Ashby\",\n      \"site\": \"jobs.ashbyhq.com\"\n    },\n    {\n      \"source\": \"Greenhouse\",\n      \"site\": \"greenhouse.io\"\n    },\n    {\n      \"source\": \"SmartRecruiters\",\n      \"site\": \"jobs.smartrecruiters.com\"\n    },\n    {\n      \"source\": \"Wellfound\",\n      \"site\": \"wellfound.com\"\n    },\n    {\n      \"source\": \"Lever\",\n      \"site\": \"jobs.lever.co\"\n    }\n  ],\n  \"titles\": [\n    {\n      \"group\": \"backend\",\n      \"title\": \"Backend Engineer\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "3891b434-030f-4032-91b5-38b09b3dafe8",
+      "name": "Config"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "=sites",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        432,
+        0
+      ],
+      "id": "90122a7b-ec71-43a6-b8d3-82bd10dc81f4",
+      "name": "Split Sites"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "titles",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        432,
+        144
+      ],
+      "id": "00e41b02-a8ca-40aa-a98b-4a69a2a567a4",
+      "name": "Split Titles"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "results",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        80
+      ],
+      "id": "d3caaef2-7b55-46e7-8778-057605651aa0",
+      "name": "Split Results"
+    },
+    {
+      "parameters": {
+        "query": "={{ $json.title }} remote",
+        "options": {
+          "include_domains": [
+            "={{ $json.site }}"
+          ],
+          "max_results": 20,
+          "time_range": "week"
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 2.1,
+      "position": [
+        896,
+        80
+      ],
+      "id": "c5b4c896-9508-46c3-b64a-c8d4579195b5",
+      "name": "Search Jobs"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are a technical recruiter screening job postings for one candidate.\n\nCANDIDATE\n- Role: [your role, e.g. Backend Engineer]\n- Main stack: [e.g. Node.js, TypeScript, PostgreSQL]\n- Years of experience: [e.g. 5]\n- Based in: [your city and country]\n- Looking for: [e.g. fully remote roles]\n\nJOB POSTING\nTitle: {{ $json.title }}\nURL: {{ $json.url }}\nContent: {{ $json.content }}\n\nUse ONLY the information in the job posting above. Never invent a company or details. If something is not stated, use \"unknown\".\n\nNOT A FIT: [the kind of jobs that you don't want, e.g. hybrid or on-site roles, DevOps, mobile].\n\nReturn ONLY a JSON object, no markdown, no backticks:\n{\n  \"company\": \"company name\",\n  \"role\": \"clean job title\",\n  \"work_mode\": \"remote | hybrid | onsite | unknown\",\n  \"remote_scope\": \"e.g. Remote - Worldwide / Remote - US only / Remote - LATAM / unknown\",\n  \"country_eligible\": \"yes | restricted | unknown\",\n  \"fit_score\": \"number from 1 to 10\",\n  \"why\": \"max 2 sentences: why it fits or what the risk is\"\n}\n\ncountry_eligible: \"yes\" = open to [your country or region] or worldwide; \"restricted\" = remote but limited to another region; \"unknown\" = not stated.\n\nScoring:\n- 9-10: strong role match, remote open to [your country or region] or worldwide\n- 7-8: strong role match, remote scope unknown\n- 5-6: strong role match, remote but restricted to another region (manual review)\n- 3-4: adjacent role or stack mismatch\n- 1-2: hybrid, on-site, or a role in NOT A FIT"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        1696,
+        80
+      ],
+      "id": "67fc2890-a712-477a-b3e1-ac28bbf719ea",
+      "name": "Analyze Job",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "582796ef-af8b-4d87-a3cd-0df7bb264348",
+              "name": "url",
+              "value": "={{ $('Dedupe URLs').item.json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "916f4718-e2fe-41ad-9d0a-9ed77f8c299a",
+              "name": "company",
+              "value": "={{ $json.output[0].content[0].text.parseJson().company }}",
+              "type": "string"
+            },
+            {
+              "id": "de535ed7-e3ef-48e6-93ad-157ec75296d3",
+              "name": "role",
+              "value": "={{ $json.output[0].content[0].text.parseJson().role }}",
+              "type": "string"
+            },
+            {
+              "id": "8a613237-773d-4fe5-a93b-f0ab804a987b",
+              "name": "work_mode",
+              "value": "={{ $json.output[0].content[0].text.parseJson().work_mode }}",
+              "type": "string"
+            },
+            {
+              "id": "a3579994-33d2-48a7-b723-a13bdacb1670",
+              "name": "remote_scope",
+              "value": "={{ $json.output[0].content[0].text.parseJson().remote_scope }}",
+              "type": "string"
+            },
+            {
+              "id": "1e7ff100-75a5-49d5-9cf1-5d22e150b7bb",
+              "name": "country_eligible",
+              "value": "={{ $json.output[0].content[0].text.parseJson().country_eligible }}",
+              "type": "string"
+            },
+            {
+              "id": "1a2ec160-a123-48b0-9239-1ae12e9104ae",
+              "name": "fit_score",
+              "value": "={{ $json.output[0].content[0].text.parseJson().fit_score }}",
+              "type": "number"
+            },
+            {
+              "id": "0e9a5f6a-5b6e-478c-a442-c530b0bb071d",
+              "name": "why",
+              "value": "={{ $json.output[0].content[0].text.parseJson().why }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2016,
+        64
+      ],
+      "id": "610ed651-daf1-4dba-bffe-594ca43010e2",
+      "name": "Parse Analysis"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "url",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        1312,
+        80
+      ],
+      "id": "37be46b8-5d0c-41b4-a030-476d8abc61ce",
+      "name": "Dedupe URLs"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "",
+          "mode": "list"
+        },
+        "table": {
+          "__rl": true,
+          "value": "",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Company": "={{ $json.company }}",
+            "Date": "={{ $now.toFormat('MM/dd/yyyy') }}",
+            "Fit Score": "={{ $json.fit_score }}",
+            "Job Title": "={{ $json.role }}",
+            "Link": "={{ $json.url }}",
+            "Status": "Success",
+            "Remote Scope": "={{ $json.remote_scope }}",
+            "Work Mode": "={{ $json.work_mode }}",
+            "Message_sent": "={{ $json.why }}",
+            "Country Eligible": "={{ $json.country_eligible }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Job Title",
+              "displayName": "Job Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Success",
+                  "value": "Success"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fit Score",
+              "displayName": "Fit Score",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Country Eligible",
+              "displayName": "Country Eligible",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Remote Scope",
+              "displayName": "Remote Scope",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Work Mode",
+              "displayName": "Work Mode",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Message_sent",
+              "displayName": "Message_sent",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Error Message",
+              "displayName": "Error Message",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        2224,
+        64
+      ],
+      "id": "eb4727b2-45b5-47e7-861b-9a6d9d408206",
+      "name": "Log a success record"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "",
+          "mode": "list"
+        },
+        "table": {
+          "__rl": true,
+          "value": "",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $now.toFormat('MM/dd/yyyy') }}",
+            "Job Title": "={{ $('Dedupe URLs').item.json.title }}",
+            "Link": "={{ $('Dedupe URLs').item.json.url }}",
+            "Status": "Error",
+            "Error Message": "={{ $json.error.message || $json.error }}",
+            "Fit Score": 0
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Job Title",
+              "displayName": "Job Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Success",
+                  "value": "Success"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fit Score",
+              "displayName": "Fit Score",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Country Eligible",
+              "displayName": "Country Eligible",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Remote Scope",
+              "displayName": "Remote Scope",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Work Mode",
+              "displayName": "Work Mode",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Message_sent",
+              "displayName": "Message_sent",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Error Message",
+              "displayName": "Error Message",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        2032,
+        544
+      ],
+      "id": "57953f69-09d9-41cf-b651-6829668a85a1",
+      "name": "Create an error log"
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=⚠️ Error in Job Finder Bot\nOpenAI failed to process a job listing.\n\nJob: {{ $json.fields['Job Title'] }}\nLink: {{ $json.fields.Link }}\nError: {{ $json.fields['Error Message'] }}",
+        "additionalFields": {
+          "appendAttribution": true
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2256,
+        544
+      ],
+      "id": "4754660d-9e8c-47fb-bc5f-6774311894ca",
+      "name": "Send a text message"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1f0deca9-a041-44be-8468-2d4683a823d1",
+              "leftValue": "={{ $json.fit_score }}",
+              "rightValue": 5,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        2224,
+        272
+      ],
+      "id": "a5d2df78-a787-4c28-a8b1-5003825ee2e3",
+      "name": "Good Fits"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "fit_score",
+              "order": "descending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        2432,
+        272
+      ],
+      "id": "aef37902-ba27-4485-b1f3-d6ea09644d89",
+      "name": "Sort"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2640,
+        272
+      ],
+      "id": "001d5bd2-7538-4457-87af-6876c5b5c5c8",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "sendTo": "you@example.com",
+        "subject": "=🔍 Job Finder — {{ $json.data.length }} jobs ({{ $now.toFormat('yyyy-MM-dd') }})",
+        "message": "=<h2 style=\"color:#1E3A5F;\">🔍 Daily Job Finder</h2>\n\n<h3>🟢 Open to your region / no restriction</h3>\n{{ $json.data.filter(j => j.country_eligible !== 'restricted').map(j => `\n<div style=\"margin-bottom:16px;padding:16px;border:1px solid #e0e0e0;border-radius:8px;\">\n  <b>${j.role}</b> — ${j.company} · Fit ${j.fit_score}/10<br>\n  📍 ${j.remote_scope}<br>\n  ${j.why}<br>\n  <a href=\"${j.url}\">See the job →</a>\n</div>`).join('') || '<p style=\"color:#999;\">Nothing new today.</p>' }}\n\n<h3>🟡 Check manually (restricted remote)</h3>\n{{ $json.data.filter(j => j.country_eligible === 'restricted').map(j => `\n<div style=\"margin-bottom:16px;padding:16px;border:1px solid #f0d58c;border-radius:8px;\">\n  <b>${j.role}</b> — ${j.company} · Fit ${j.fit_score}/10<br>\n  📍 ${j.remote_scope}<br>\n  ${j.why}<br>\n  <a href=\"${j.url}\">See the job →</a>\n</div>`).join('') || '<p style=\"color:#999;\">Nothing new today.</p>' }}\n\n<hr/>\n<p style=\"color:#999;font-size:12px;\">Sent automatically by your Job Finder 🤖</p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2848,
+        272
+      ],
+      "id": "2edf8fe3-f9b2-4ce5-b00b-8f1669422657",
+      "name": "Send a message"
+    },
+    {
+      "parameters": {
+        "operation": "removeItemsSeenInPreviousExecutions",
+        "dedupeValue": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        80
+      ],
+      "id": "8e71c030-57e1-4389-a854-8958a12f1c13",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "triggerAtHour": 11
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d8bcc473-7f9a-4296-9f4d-1c33bdba1f94",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "connections": {
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Search Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Split Titles",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Sites",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Sites": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Titles": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Search Jobs": {
+      "main": [
+        [
+          {
+            "node": "Split Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Results": {
+      "main": [
+        [
+          {
+            "node": "Dedupe URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Job": {
+      "main": [
+        [
+          {
+            "node": "Parse Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create an error log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dedupe URLs": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Analysis": {
+      "main": [
+        [
+          {
+            "node": "Log a success record",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Good Fits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an error log": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Good Fits": {
+      "main": [
+        [
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Analyze Job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "tags": []
+}
