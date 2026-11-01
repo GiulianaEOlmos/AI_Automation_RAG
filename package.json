@@ -1,0 +1,17 @@
+{
+  "name": "ai-automation-rag",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Demos for the dev.to series about AI and automation",
+  "scripts": {
+    "demo:01": "node RAG/01-semantic-search/index.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@qdrant/js-client-rest": "^1.20.0",
+    "openai": "^7.47.0"
+  }
+}
