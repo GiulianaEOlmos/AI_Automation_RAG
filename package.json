@@ -8,7 +8,8 @@
     "demo:01": "node RAG/01-semantic-search/index.js",
     "demo:02:parse": "node RAG/02-parse-and-index/parse.js",
     "demo:02:index": "node RAG/02-parse-and-index/index.js",
-    "demo:02:search": "node RAG/02-parse-and-index/search.js"
+    "demo:02:search": "node RAG/02-parse-and-index/search.js",
+    "demo:03": "node RAG/03-full-rag/rag.js"
   },
   "engines": {
     "node": ">=22"

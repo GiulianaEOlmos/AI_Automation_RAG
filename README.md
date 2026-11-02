@@ -37,6 +37,14 @@ npm run demo:02:search   # semantic search over the documents
 
 The parsed Markdown files are already in `RAG/02-parse-and-index/parsed`, so you can skip the first step if you don't want to create a LlamaParse account. If you want to parse them again, delete that folder first.
 
+### 03 · Complete RAG
+
+[`RAG/03-full-rag`](./RAG/03-full-rag/rag.js) uses the documents from demo 02 to answer questions with an LLM: it searches the most relevant chunks in Qdrant, builds a prompt with them, and the LLM answers using only that context. Run demo 02 first (at least `npm run demo:02:index`).
+
+```bash
+npm run demo:03
+```
+
 ## If something fails
 
 - **`Unsupported engine`** when you run `npm install`: your Node version is too old. Install Node 22 or newer from [nodejs.org](https://nodejs.org/) (or with nvm: `nvm install 24`).
