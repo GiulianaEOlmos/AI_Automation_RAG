@@ -4,6 +4,13 @@ import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import { existsSync } from 'fs';
 
+// Check the Node version: this demo needs Node 22 or newer
+const nodeMajor = Number(process.versions.node.split('.')[0]);
+if (nodeMajor < 22) {
+  console.error(`You are using Node ${process.versions.node}. This demo needs Node 22 or newer (check it with "node -v").`);
+  process.exit(1);
+}
+
 // Load the variables from the .env file in the root of the repo
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const envPath = resolve(__dirname, '../../.env');

@@ -5,12 +5,16 @@
   "type": "module",
   "description": "Demos for the dev.to series about AI and automation",
   "scripts": {
-    "demo:01": "node RAG/01-semantic-search/index.js"
+    "demo:01": "node RAG/01-semantic-search/index.js",
+    "demo:02:parse": "node RAG/02-parse-and-index/parse.js",
+    "demo:02:index": "node RAG/02-parse-and-index/index.js",
+    "demo:02:search": "node RAG/02-parse-and-index/search.js"
   },
   "engines": {
     "node": ">=22"
   },
   "dependencies": {
+    "@llamaindex/llama-cloud": "^2.19.0",
     "@qdrant/js-client-rest": "^1.20.0",
     "openai": "^7.47.0"
   }

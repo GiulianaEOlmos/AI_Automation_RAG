@@ -11,6 +11,7 @@ You need:
 - **Node.js 22 or newer** (check it with `node -v`)
 - An **OpenAI API key**
 - A **Qdrant** database: a free cluster in [Qdrant Cloud](https://cloud.qdrant.io/), or local with `docker run -p 6333:6333 qdrant/qdrant`
+- Only for demo 02 (optional): a **LlamaParse API key** from [cloud.llamaindex.ai](https://cloud.llamaindex.ai)
 
 ```bash
 git clone https://github.com/GiulianaEOlmos/AI_Automation_RAG.git
@@ -24,9 +25,22 @@ npm run demo:01
 
 [`RAG/01-semantic-search`](./RAG/01-semantic-search/index.js) saves 5 small texts in Qdrant and searches the most similar ones for two questions. You can run it as many times as you want.
 
+### 02 · Parse and index real documents
+
+[`RAG/02-parse-and-index`](./RAG/02-parse-and-index) takes 10 PDFs (my Technical Interview Prep series), parses them with [LlamaParse](https://cloud.llamaindex.ai), splits them into chunks, and saves them in Qdrant. It has 3 steps:
+
+```bash
+npm run demo:02:parse    # PDFs -> Markdown (needs LLAMA_CLOUD_API_KEY in your .env)
+npm run demo:02:index    # Markdown -> chunks -> embeddings -> Qdrant
+npm run demo:02:search   # semantic search over the documents
+```
+
+The parsed Markdown files are already in `RAG/02-parse-and-index/parsed`, so you can skip the first step if you don't want to create a LlamaParse account. If you want to parse them again, delete that folder first.
+
 ## If something fails
 
 - **`Unsupported engine`** when you run `npm install`: your Node version is too old. Install Node 22 or newer from [nodejs.org](https://nodejs.org/) (or with nvm: `nvm install 24`).
 - **`Missing .env file`** or **`Missing ... in your .env file`**: create the `.env` with `cp .env.example .env` and complete it.
 - **`401` / `Incorrect API key`**: check `OPENAI_API_KEY`.
+- **`LlamaParse rejected your API key`**: check `LLAMA_CLOUD_API_KEY`.
 - **`Unauthorized` / `fetch failed`** with Qdrant: check `QDRANT_URL` and `QDRANT_API_KEY`. If you use Docker, check that it's running.
