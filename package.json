@@ -9,7 +9,9 @@
     "demo:02:parse": "node RAG/02-parse-and-index/parse.js",
     "demo:02:index": "node RAG/02-parse-and-index/index.js",
     "demo:02:search": "node RAG/02-parse-and-index/search.js",
-    "demo:03": "node RAG/03-full-rag/rag.js"
+    "demo:03": "node RAG/03-full-rag/rag.js",
+    "demo:04:index": "node RAG/04-advanced-rag/index-hybrid.js",
+    "demo:04": "node RAG/04-advanced-rag/rag-advanced.js"
   },
   "engines": {
     "node": ">=22"
@@ -17,6 +19,7 @@
   "dependencies": {
     "@llamaindex/llama-cloud": "^2.19.0",
     "@qdrant/js-client-rest": "^1.20.0",
+    "cohere-ai": "^8.3.0",
     "openai": "^7.47.0"
   }
 }

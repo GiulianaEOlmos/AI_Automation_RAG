@@ -12,6 +12,7 @@ You need:
 - An **OpenAI API key**
 - A **Qdrant** database: a free cluster in [Qdrant Cloud](https://cloud.qdrant.io/), or local with `docker run -p 6333:6333 qdrant/qdrant`
 - Only for demo 02 (optional): a **LlamaParse API key** from [cloud.llamaindex.ai](https://cloud.llamaindex.ai)
+- Only for demo 04: a **Cohere API key** from [dashboard.cohere.com](https://dashboard.cohere.com/api-keys)
 
 ```bash
 git clone https://github.com/GiulianaEOlmos/AI_Automation_RAG.git
@@ -45,10 +46,22 @@ The parsed Markdown files are already in `RAG/02-parse-and-index/parsed`, so you
 npm run demo:03
 ```
 
+### 04 · Advanced RAG
+
+[`RAG/04-advanced-rag`](./RAG/04-advanced-rag/rag-advanced.js) improves demo 03 with HyDE, hybrid search (semantic search + BM25, joined with RRF) and re-ranking with [Cohere](https://dashboard.cohere.com/api-keys). It needs a `COHERE_API_KEY` in your `.env`.
+
+BM25 needs one more vector for each chunk, so this demo creates its own collection (`interview-prep-hybrid`) with the parsed documents from demo 02:
+
+```bash
+npm run demo:04:index    # run once: creates the hybrid collection
+npm run demo:04
+```
+
 ## If something fails
 
 - **`Unsupported engine`** when you run `npm install`: your Node version is too old. Install Node 22 or newer from [nodejs.org](https://nodejs.org/) (or with nvm: `nvm install 24`).
 - **`Missing .env file`** or **`Missing ... in your .env file`**: create the `.env` with `cp .env.example .env` and complete it.
 - **`401` / `Incorrect API key`**: check `OPENAI_API_KEY`.
 - **`LlamaParse rejected your API key`**: check `LLAMA_CLOUD_API_KEY`.
+- **`Cohere rejected your API key`**: check `COHERE_API_KEY`.
 - **`Unauthorized` / `fetch failed`** with Qdrant: check `QDRANT_URL` and `QDRANT_API_KEY`. If you use Docker, check that it's running.
