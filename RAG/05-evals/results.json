@@ -1,0 +1,332 @@
+{
+  "basic": [
+    {
+      "question": "What is the difference between arrow functions and regular functions?",
+      "answer": "The key difference is how they handle `this`. A regular function’s `this` depends on how it’s called; an arrow function inherits `this` from its surrounding scope. In the example, `regularGreet()` accesses the cat’s `name`, while `arrowGreet()` gets `undefined`. Arrow functions were introduced in ES6 and also use different syntax.",
+      "sources": [
+        "01 - Technical Interview Questions - Part 1 - Javascript.md",
+        "01 - Technical Interview Questions - Part 1 - Javascript.md",
+        "01 - Technical Interview Questions - Part 1 - Javascript.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer accurately explains the difference in `this` handling and includes details supported by the context."
+    },
+    {
+      "question": "What are generics in TypeScript?",
+      "answer": "Generics let you write reusable functions, classes, and interfaces that work with different types while preserving type safety, instead of using `any`. A type parameter such as `<T>` is replaced by the specific type used when the generic is called.",
+      "sources": [
+        "02 - Technical Interview Questions - Part 2 - Typescript.md",
+        "02 - Technical Interview Questions - Part 2 - Typescript.md",
+        "02 - Technical Interview Questions - Part 2 - Typescript.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer accurately explains reusable generics, the `<T>` type parameter, and avoiding `any`, all supported by the context."
+    },
+    {
+      "question": "What does ACID mean?",
+      "answer": "ACID stands for **Atomicity, Consistency, Isolation, and Durability**. The provided context explains Atomicity and Consistency: transactions either complete fully or roll back, and they preserve data integrity.",
+      "sources": [
+        "04 - Technical Interview Questions - Part 3 - SQL.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 4,
+      "answerRelevance": 5,
+      "reason": "It gives the expected expansion and accurately summarizes the two properties in the context, though Isolation and Durability are not stated in the provided context."
+    },
+    {
+      "question": "What is the difference between git merge and git rebase?",
+      "answer": "**Git merge** combines changes from two branches by creating a new commit, preserving the existing branch histories.\n\n**Git rebase** replays one branch’s commits onto a new base, rewriting that branch’s commit history.",
+      "sources": [
+        "05 - Technical Interview Questions - Part 4 - Git + SQL vs noSQL.md",
+        "05 - Technical Interview Questions - Part 4 - Git + SQL vs noSQL.md",
+        "05 - Technical Interview Questions - Part 4 - Git + SQL vs noSQL.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "It accurately explains that merge creates a combining commit, while rebase replays commits onto a new base and rewrites history."
+    },
+    {
+      "question": "Why use Dynamoose instead of working with DynamoDB directly?",
+      "answer": "Dynamoose provides a Mongoose-like experience for DynamoDB, making database work faster and clearer than working with DynamoDB directly.",
+      "sources": [
+        "06 - Technical Interview - Boilerplate 2 - Node + Serverless + AWS + Github Actions.md",
+        "06 - Technical Interview - Boilerplate 2 - Node + Serverless + AWS + Github Actions.md",
+        "06 - Technical Interview - Boilerplate 2 - Node + Serverless + AWS + Github Actions.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "It accurately states that Dynamoose offers a Mongoose-like experience and helps make database work faster and clearer."
+    },
+    {
+      "question": "How does Node.js handle asynchronous code?",
+      "answer": "Node.js handles asynchronous code using the event loop, which lets JavaScript process asynchronous work efficiently despite being single-threaded. I don't have enough information to describe the event loop’s specific phases or queues.",
+      "sources": [
+        "07 - Technical Interview Questions - Part 5 - Event Loop.md",
+        "01 - Technical Interview Questions - Part 1 - Javascript.md",
+        "01 - Technical Interview Questions - Part 1 - Javascript.md"
+      ],
+      "hit": true,
+      "correctness": 3,
+      "faithfulness": 5,
+      "answerRelevance": 4,
+      "reason": "It correctly identifies the event loop and JavaScript’s single-threaded nature, but omits the expected call-stack, microtask-queue, and task-queue order."
+    },
+    {
+      "question": "What does the STAR method stand for?",
+      "answer": "STAR stands for Situation, Task, Action, and Result.",
+      "sources": [
+        "08 - Technical Interview Questions - Behavioral Questions.md",
+        "08 - Technical Interview Questions - Behavioral Questions.md",
+        "08 - Technical Interview Questions - Behavioral Questions.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 4,
+      "answerRelevance": 5,
+      "reason": "It correctly gives the four words in STAR and directly answers the question, though the context only explicitly shows Situation and does not include the remaining definitions in the excerpt."
+    },
+    {
+      "question": "What is the difference between an inner join and an outer join?",
+      "answer": "An **INNER JOIN** returns only rows with matching values in both tables. An **OUTER JOIN** returns those matching rows plus unmatched rows: a left join includes all rows from the left table, a right join all rows from the right, and a full join all rows from both.",
+      "sources": [
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md",
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md",
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer accurately explains matching rows for inner joins and unmatched rows for outer joins, consistent with the context."
+    },
+    {
+      "question": "What are the trade-offs of using indexes in a database?",
+      "answer": "Indexes improve query performance but have trade-offs: they use extra disk space, slow down `INSERT`, `UPDATE`, and `DELETE` operations because indexes must be updated, and add maintenance overhead.",
+      "sources": [
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md",
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md",
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer accurately lists the trade-offs stated in the context and directly addresses the question."
+    },
+    {
+      "question": "What is the difference between Promise.all and Promise.race?",
+      "answer": "`Promise.all()` waits for every promise to fulfill. It fulfills with their results, or rejects as soon as an input promise rejects.\n\n`Promise.race()` settles as soon as the first input promise settles, adopting that promise’s fulfilled or rejected state and value or reason.",
+      "sources": [
+        "10 - Technical Interview Questions - Part 7 - Promises Methods.md",
+        "10 - Technical Interview Questions - Part 7 - Promises Methods.md",
+        "10 - Technical Interview Questions - Part 7 - Promises Methods.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer accurately distinguishes Promise.all’s fulfillment and rejection behavior from Promise.race settling with the first promise to settle, consistent with the context."
+    },
+    {
+      "question": "What is the best pizza in Italy?",
+      "answer": "I don't have enough information to answer that.",
+      "sources": [],
+      "hit": null,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer appropriately states that there is not enough information, matching the expected answer."
+    },
+    {
+      "question": "How do I deploy a React app to Vercel?",
+      "answer": "I don't have enough information to answer that.",
+      "sources": [],
+      "hit": null,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer matches the expected response and appropriately notes that no context was provided."
+    }
+  ],
+  "advanced": [
+    {
+      "question": "What is the difference between arrow functions and regular functions?",
+      "answer": "They differ syntactically, and arrow functions were introduced in ES6. The key difference highlighted in the context is how they handle `this`.",
+      "sources": [
+        "01 - Technical Interview Questions - Part 1 - Javascript.md",
+        "01 - Technical Interview Questions - Part 1 - Javascript.md",
+        "01 - Technical Interview Questions - Part 1 - Javascript.md"
+      ],
+      "hit": true,
+      "correctness": 4,
+      "faithfulness": 5,
+      "answerRelevance": 4,
+      "reason": "It correctly identifies `this` handling as the key difference, but does not explain that regular functions use the calling object as `this` while arrow functions have no own `this`."
+    },
+    {
+      "question": "What are generics in TypeScript?",
+      "answer": "Generics let you create reusable functions, classes, and interfaces that work with different types while preserving type information, rather than relying on `any`. `<T>` is a placeholder for a type; it can be named something else, such as `<V>`. Generics are erased when TypeScript is compiled to JavaScript.",
+      "sources": [
+        "02 - Technical Interview Questions - Part 2 - Typescript.md",
+        "02 - Technical Interview Questions - Part 2 - Typescript.md",
+        "02 - Technical Interview Questions - Part 2 - Typescript.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer accurately explains reusable generics, the `<T>` placeholder, and avoiding `any`, with only relevant details from the context."
+    },
+    {
+      "question": "What does ACID mean?",
+      "answer": "ACID refers to the key properties of transactions:\n\n- **Atomicity:** The transaction succeeds or fails as a whole; if any part fails, it rolls back.\n- **Consistency:** The transaction preserves data integrity and constraints.\n- **Isolation:** Concurrent transactions do not interfere with each other.\n- **Durability:** Committed changes are permanently stored, even if the system fails.",
+      "sources": [
+        "04 - Technical Interview Questions - Part 3 - SQL.md",
+        "04 - Technical Interview Questions - Part 3 - SQL.md",
+        "04 - Technical Interview Questions - Part 3 - SQL.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer correctly expands ACID and summarizes each property using information from the context."
+    },
+    {
+      "question": "What is the difference between git merge and git rebase?",
+      "answer": "**Git merge** combines changes from two branches by creating a new commit. **Git rebase** replays one branch’s commits onto a new base, rewriting that branch’s history.",
+      "sources": [
+        "05 - Technical Interview Questions - Part 4 - Git + SQL vs noSQL.md",
+        "05 - Technical Interview Questions - Part 4 - Git + SQL vs noSQL.md",
+        "05 - Technical Interview Questions - Part 4 - Git + SQL vs noSQL.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer accurately distinguishes merge’s combining commit from rebase’s replayed commits and rewritten history, as stated in the context."
+    },
+    {
+      "question": "Why use Dynamoose instead of working with DynamoDB directly?",
+      "answer": "Dynamoose provides a Mongoose-like experience for DynamoDB, making database work clearer and faster than working with DynamoDB directly.",
+      "sources": [
+        "06 - Technical Interview - Boilerplate 2 - Node + Serverless + AWS + Github Actions.md",
+        "06 - Technical Interview - Boilerplate 2 - Node + Serverless + AWS + Github Actions.md",
+        "06 - Technical Interview - Boilerplate 2 - Node + Serverless + AWS + Github Actions.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "It captures the context’s stated reasons: Dynamoose offers a Mongoose-like experience and makes database work clearer and faster."
+    },
+    {
+      "question": "How does Node.js handle asynchronous code?",
+      "answer": "Node.js uses the event loop to handle asynchronous tasks in its single-threaded environment. It processes the call stack first, then the microtask queue, and finally the task queue, handling tasks one by one.",
+      "sources": [
+        "07 - Technical Interview Questions - Part 5 - Event Loop.md",
+        "07 - Technical Interview Questions - Part 5 - Event Loop.md",
+        "07 - Technical Interview Questions - Part 5 - Event Loop.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer accurately describes the event loop and the stated processing order, using information supported by the context."
+    },
+    {
+      "question": "What does the STAR method stand for?",
+      "answer": "STAR stands for Situation, Task, Action, and Result.",
+      "sources": [
+        "08 - Technical Interview Questions - Behavioral Questions.md",
+        "08 - Technical Interview Questions - Behavioral Questions.md",
+        "08 - Technical Interview Questions - Behavioral Questions.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer correctly expands STAR using the terms stated in the context and directly answers the question."
+    },
+    {
+      "question": "What is the difference between an inner join and an outer join?",
+      "answer": "An **INNER JOIN** returns only rows with matching values in both tables. An **OUTER JOIN** also includes unmatched rows: a left join includes all rows from the left table, a right join includes all rows from the right table, and a full join includes all rows from both tables.",
+      "sources": [
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md",
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md",
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer accurately explains that inner joins return matches, while outer joins also include unmatched rows, consistent with the context."
+    },
+    {
+      "question": "What are the trade-offs of using indexes in a database?",
+      "answer": "Indexes improve query performance but have trade-offs:\n\n- **More disk space:** Indexes consume additional storage.\n- **Slower writes:** Inserts, updates, and deletes take longer because the indexes must also be updated.\n- **More maintenance:** Indexes add ongoing maintenance overhead.",
+      "sources": [
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md",
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md",
+        "09 - Technical Interview Questions - Part 6 - SQL 2.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "It accurately lists the storage, write-speed, and maintenance trade-offs supported by the context."
+    },
+    {
+      "question": "What is the difference between Promise.all and Promise.race?",
+      "answer": "`Promise.all()` fulfills only after all input promises fulfill, and rejects immediately if any promise rejects. `Promise.race()` settles as soon as the first input promise settles, adopting that promise’s fulfilled or rejected state and value or reason.",
+      "sources": [
+        "10 - Technical Interview Questions - Part 7 - Promises Methods.md",
+        "10 - Technical Interview Questions - Part 7 - Promises Methods.md",
+        "10 - Technical Interview Questions - Part 7 - Promises Methods.md"
+      ],
+      "hit": true,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer accurately distinguishes waiting for all promises from settling with the first promise, and is fully supported by the context."
+    },
+    {
+      "question": "What is the best pizza in Italy?",
+      "answer": "I don't have enough information to answer that.",
+      "sources": [
+        "08 - Technical Interview Questions - Behavioral Questions.md",
+        "10 - Technical Interview Questions - Part 7 - Promises Methods.md",
+        "06 - Technical Interview - Boilerplate 2 - Node + Serverless + AWS + Github Actions.md"
+      ],
+      "hit": null,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The context provides no information about pizza in Italy, and the answer appropriately says there is not enough information."
+    },
+    {
+      "question": "How do I deploy a React app to Vercel?",
+      "answer": "I don't have enough information to answer that.",
+      "sources": [
+        "06 - Technical Interview - Boilerplate 2 - Node + Serverless + AWS + Github Actions.md",
+        "06 - Technical Interview - Boilerplate 2 - Node + Serverless + AWS + Github Actions.md",
+        "03 - Technical Interview - Boilerplate 1 - Node + Typescript + PostgreSQL.md"
+      ],
+      "hit": null,
+      "correctness": 5,
+      "faithfulness": 5,
+      "answerRelevance": 5,
+      "reason": "The answer appropriately says there isn’t enough information, since the context describes an AWS Serverless deployment rather than deploying a React app to Vercel."
+    }
+  ]
+}

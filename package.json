@@ -11,7 +11,8 @@
     "demo:02:search": "node RAG/02-parse-and-index/search.js",
     "demo:03": "node RAG/03-full-rag/rag.js",
     "demo:04:index": "node RAG/04-advanced-rag/index-hybrid.js",
-    "demo:04": "node RAG/04-advanced-rag/rag-advanced.js"
+    "demo:04": "node RAG/04-advanced-rag/rag-advanced.js",
+    "demo:05": "node RAG/05-evals/evals.js"
   },
   "engines": {
     "node": ">=22"

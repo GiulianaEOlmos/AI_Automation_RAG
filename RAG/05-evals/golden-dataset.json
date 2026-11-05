@@ -1,0 +1,62 @@
+[
+  {
+    "question": "What is the difference between arrow functions and regular functions?",
+    "expectedAnswer": "The key difference is how they handle `this`. A regular function uses the object it is called on as `this`, while an arrow function doesn't have its own `this`.",
+    "expectedSource": "01 - Technical Interview Questions - Part 1 - Javascript.md"
+  },
+  {
+    "question": "What are generics in TypeScript?",
+    "expectedAnswer": "Generics allow us to create reusable functions, classes and interfaces that work with different types without specifying one. <T> declares a generic type. They help to avoid using `any`.",
+    "expectedSource": "02 - Technical Interview Questions - Part 2 - Typescript.md"
+  },
+  {
+    "question": "What does ACID mean?",
+    "expectedAnswer": "ACID are the key properties of transactions: Atomicity, Consistency, Isolation and Durability.",
+    "expectedSource": "04 - Technical Interview Questions - Part 3 - SQL.md"
+  },
+  {
+    "question": "What is the difference between git merge and git rebase?",
+    "expectedAnswer": "Both integrate changes from one branch into another. Git rebase rewrites the commit history by replaying the commits on top of the new base. Git merge creates a new commit that combines both branches.",
+    "expectedSource": "05 - Technical Interview Questions - Part 4 - Git + SQL vs noSQL.md"
+  },
+  {
+    "question": "Why use Dynamoose instead of working with DynamoDB directly?",
+    "expectedAnswer": "Working directly with DynamoDB is hard and its documentation is bad. Dynamoose is based on Mongoose, so it gives a similar experience and helps to work faster and more clearly with the database.",
+    "expectedSource": "06 - Technical Interview - Boilerplate 2 - Node + Serverless + AWS + Github Actions.md"
+  },
+  {
+    "question": "How does Node.js handle asynchronous code?",
+    "expectedAnswer": "With the event loop. JavaScript is single-threaded: the event loop processes the call stack first, then the microtask queue, and then the task queue.",
+    "expectedSource": "07 - Technical Interview Questions - Part 5 - Event Loop.md"
+  },
+  {
+    "question": "What does the STAR method stand for?",
+    "expectedAnswer": "Situation (the context), Task (your role and responsibility), Action (the steps you took) and Result (the outcomes you achieved).",
+    "expectedSource": "08 - Technical Interview Questions - Behavioral Questions.md"
+  },
+  {
+    "question": "What is the difference between an inner join and an outer join?",
+    "expectedAnswer": "An inner join returns only the rows that match in both tables. An outer join returns the same rows plus the rows that don't have a match in the other table.",
+    "expectedSource": "09 - Technical Interview Questions - Part 6 - SQL 2.md"
+  },
+  {
+    "question": "What are the trade-offs of using indexes in a database?",
+    "expectedAnswer": "Indexes use more disk space, make write operations (INSERT, UPDATE, DELETE) slower, and add more maintenance.",
+    "expectedSource": "09 - Technical Interview Questions - Part 6 - SQL 2.md"
+  },
+  {
+    "question": "What is the difference between Promise.all and Promise.race?",
+    "expectedAnswer": "Promise.all waits until all the promises are fulfilled, and rejects as soon as one rejects. Promise.race settles as soon as the first promise settles (fulfilled or rejected), with its value or reason.",
+    "expectedSource": "10 - Technical Interview Questions - Part 7 - Promises Methods.md"
+  },
+  {
+    "question": "What is the best pizza in Italy?",
+    "expectedAnswer": "I don't have enough information to answer that.",
+    "expectedSource": null
+  },
+  {
+    "question": "How do I deploy a React app to Vercel?",
+    "expectedAnswer": "I don't have enough information to answer that.",
+    "expectedSource": null
+  }
+]

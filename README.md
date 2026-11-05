@@ -57,6 +57,16 @@ npm run demo:04:index    # run once: creates the hybrid collection
 npm run demo:04
 ```
 
+### 05 · Evals
+
+[`RAG/05-evals`](./RAG/05-evals/evals.js) compares the basic RAG (demo 03) with the advanced RAG (demo 04), using a [golden dataset](./RAG/05-evals/golden-dataset.json) of 12 questions about the documents. For each answer it measures if the expected document was retrieved, and uses an LLM as a judge to score correctness, faithfulness and answer relevance. Run demos 02 and 04 first (at least `npm run demo:02:index` and `npm run demo:04:index`).
+
+```bash
+npm run demo:05
+```
+
+The details of each answer are saved in `RAG/05-evals/results.json`.
+
 ## If something fails
 
 - **`Unsupported engine`** when you run `npm install`: your Node version is too old. Install Node 22 or newer from [nodejs.org](https://nodejs.org/) (or with nvm: `nvm install 24`).
